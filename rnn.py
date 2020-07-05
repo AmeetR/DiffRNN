@@ -44,7 +44,7 @@ if (g['EXPTYPE'] not in ['HARD', 'EASY', 'HARDEASY', 'EASYHARDEASY']):
     raise Exception('Wrong EXPTYPE value')
 g['NBMARGIN'] = int(g['NBMARGIN'])
 g['RNGSEED'] = int(g['RNGSEED'])
-print g
+print (g)
 
 np.random.seed(g['RNGSEED'])
 
@@ -58,7 +58,7 @@ else:
     data = open(g['DIR'] + '/inputhard.txt', 'r').read() # should be simple plain text file
 chars = list(set(data))
 data_size, vocab_size = len(data), len(chars)
-print 'data has', data_size, 'characters,', vocab_size, 'unique.'# % (data_size, vocab_size)
+print ('data has', data_size, 'characters,', vocab_size, 'unique.')# % (data_size, vocab_size)
 char_to_ix = { ch:i for i,ch in enumerate(chars) }
 ix_to_char = { i:ch for i,ch in enumerate(chars) }
 
@@ -155,14 +155,14 @@ while True:
   if n % 100 == 0:
     sample_ix = sample(hprev, inputs[0], 200)
     txt = ''.join(ix_to_char[ix] for ix in sample_ix)
-    print '----\n %s \n----' % (txt, )
+    print ('----\n %s \n----' % (txt, ))
 
   # forward seq_length characters through the net and fetch gradient
   loss, dWxh, dWhh,  dWhy, dbh, dby, hprev = lossFun(inputs, targets, hprev)
   smooth_loss = smooth_loss * 0.99 + loss * 0.01
   if n % 100 == 0: 
-      print 'iter %d, position in data %d, loss: %f , nb hidden neurons %d, sum-abs norms: %f' % (n, p, smooth_loss, hidden_size, sum(abs(normz))), # print progress
-      print normz.T
+      print ('iter %d, position in data %d, loss: %f , nb hidden neurons %d, sum-abs norms: %f' % (n, p, smooth_loss, hidden_size, sum(abs(normz)))), # print progress
+      print (normz.T)
   if n % 1000 == 0: 
       with open("output.txt", "a") as myf:
         msg = "%d %d %f  %d %f" % (n, p, smooth_loss, hidden_size, sum(abs(normz))) # print progress
@@ -264,7 +264,7 @@ while True:
               mbh = np.append(mbh, .01 * np.ones((1,1)), axis=0)
 
               hidden_size += 1
-              print "Adding Neuron"
+              print ("Adding Neuron")
 
 
 
@@ -280,6 +280,6 @@ while True:
       data = open(g['DIR'] + '/inputeasy.txt', 'r').read() # should be simple plain text file
       p = 0
   if n > g['NBSTEPS']:
-      print "Done!"
+      print ("Done!")
       sys.exit(0)
 
